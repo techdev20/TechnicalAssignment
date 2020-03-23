@@ -1,0 +1,56 @@
+﻿<div class="container">
+    <div class="jumbotron">
+        <h1>BrainWare Orders</h1>
+        <p class="lead">This is the BrainWare orders page! Welcome</p>
+    </div>
+    @*<div class="row">
+            <div class="col-md-12">
+                <h2>Your Orders</h2>
+                <div id="orders"></div>
+            </div>
+
+        </div>*@
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Your Orders</div>
+        <div class="panel-body">
+            <div class="col-xs-5">
+                <div id="orders"></div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        $(document).ready(function () {
+            var $orders = $('#orders');
+            $.ajax({
+                'url': '/api/order/1',
+                'type': 'GET',
+                'success': function (data) {
+
+                    var $orderList = $('<ul class="list-inline">');
+
+                    if (data) {
+                        $.each(data,
+                            function (i) {
+                                var $li = $('<li class="list-group" />').text(this.Description + ' (Total: $' + this.OrderTotal + ')')
+                                    .appendTo($orderList);
+
+                                var $productList = $('<ul/>');
+
+                                $.each(this.OrderProducts, function (j) {
+                                    var $li2 = $('<li class="list-group-item"/>').text(this.Product.Name + ' (' + this.Quantity + ' @@ $' + this.Price + '/ea)')
+                                        .appendTo($productList);
+                                });
+
+                                $productList.appendTo($li);
+                            });
+
+                        $orders.append($orderList);
+                        $('</ul>').append($orderList);
+                    }
+                }
+            });
+        });
+    </script>
+
