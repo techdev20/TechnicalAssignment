@@ -15,7 +15,7 @@ namespace Web.Infrastructure
 
         public Database()
         {
-            string connectionStr = ConfigurationManager.ConnectionStrings["localhostconnection"].ConnectionString;
+            string connectionStr = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
 
             _connection = new SqlConnection(connectionStr);
 
